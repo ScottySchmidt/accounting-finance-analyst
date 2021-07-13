@@ -39,16 +39,15 @@ with open(r'C:\Users\13098\Desktop\DatatelFY21.xlsx', 'rb') as dfile:
                 dSUM=round(float(dRow['Ending Amount'].values), 2) #datatel Subtotal Number
                 aSUM=round(float(aRow['INVOICE AMOUNT'].values),2) #access Subtotal Number
                 if  dSUM==aSUM: # if Datatel and Access numbers equal do the following:
-                    print(dSUM, " datatel matches access total: ", aSUM, d, " Account ID ", a)
+                    #print(dSUM, " datatel matches access total: ", aSUM, d, " Account ID ", a)
                     balancedAccounts[d]=dSUM #store the "correct" Datatel number with correct subtotal
                     #This will be used in section 2 below
                 else: # Datatell and Access account subtotal does NOT equal:
                     # They do NOT match and further checking will be done by printing the below info:
-                    d=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
-                    print(a, " Access-----check account----- Datatel", d)
+                    hyphens=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
+                    print(a, " Access-----check account----- Datatel", hyphens)
                     print(dSUM, " datatel DOES NOT match access ", aSUM, ". Difference is: ", round(float(dSUM-aSUM), 2) )
-                    print("check for transaction that may not be in Datatel yet (no D in REQ column) " )
-                    print(a, "----- check account number----- ", a)         
+                    #print("check for transaction that may not be in Datatel yet (no D in REQ column) " )        
     print("Finished matching datatel to access accounts in: ", round(time.time()-start, 3), " seconds");
 print("----------------END SECTION1 --------------")
 ###############################################################################
@@ -58,7 +57,6 @@ print("----------------END SECTION1 --------------")
 # Therefore, each Access column in the REQ should begin with a D 
 # This part will check for exactly that.
 ###############################################################################
-
 print("Starting Section 2!")
 
 with open(r'C:\Users\13098\Desktop\AccessFy21.xlsx', 'rb') as afile:
@@ -72,8 +70,11 @@ with open(r'C:\Users\13098\Desktop\AccessFy21.xlsx', 'rb') as afile:
         accessDtotal=round(float(accountRow['INVOICE AMOUNT'].values),2) #access Subtotal Number
         if account in balancedAccounts: #only need to check for Datatel Accounts 
             if accessDtotal==balancedAccounts[account]: 
-                print(account, " is correct and missing not Ds in Access in REQ# column")
+                continue;
+                #print(account, " is correct and missing not Ds in Access in REQ# column")
             else:
-                print(account, " check for potential missing Ds in Access in REQ# column ")
+                a=account
+                hyphens=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
+                print(account, " check for potential missing Ds in Access in REQ# column: ", hyphens)
     print("Completed Section 2 ")
 print("Program Done! Finished in ", round(time.time()-start, 3), " seconds")
