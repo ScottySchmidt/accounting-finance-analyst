@@ -1,0 +1,56 @@
+'''
+MONTHLY BUDGET CONCISE REPORT:
+Last Updated: 7/21/21
+'''
+import csv, time
+import pandas as pd
+from datetime import date
+
+print("Running Budget Analysis report on: ", date.today() )
+start=time.time()
+
+#Put Location of Excel Files here:
+access=r'C:\Users\scott\OneDrive\Desktop\AccessBudget.xlsx'
+datatel=r'C:\Users\scott\OneDrive\Desktop\DatatelBudget.xlsx'
+
+#Opens Access Excel sheet:
+accessDF=pd.read_excel(access) #Access DataFrame
+accessDF=accessDF.dropna(subset=['REQ#'])
+accessDF=accessDF.filter(['ACCOUNT NUMBER', 'INVOICE AMOUNT'])
+accessTotals = accessDF.groupby('ACCOUNT NUMBER')['INVOICE AMOUNT'].sum().reset_index()
+
+#Opens Datatel Excel sheets:
+dataDF=pd.read_excel(datatel) #Datatel Dataframe
+dataDF=dataDF[['GL Account', ' Closing Balance']]
+dataTotals=dataDF.groupby('GL Account')[' Closing Balance'].sum().reset_index()
+dataTotals['GL Account'] = dataTotals['GL Account'].str.replace('-', '') #gets rid of Hyphens 
+
+#get each individual Datatel Account Number:
+dataAccounts=dataDF['GL Account'].unique() #finds only unique accounts
+dataAcc=[] #final list
+
+for acc in dataAccounts:
+    dataAcc.append(acc.replace('-', '') ) #removes hypens
+    
+check=set()
+
+for d in dataAcc: #checks each account in Datatel...
+    for a in accessTotals['ACCOUNT NUMBER']: # checks each account in Access...
+        if d==a: #if Datatel and Access Account are the same then do the following:
+            dRow=dataTotals.loc[dataTotals['GL Account']==d]
+            aRow=accessTotals.loc[accessTotals['ACCOUNT NUMBER']==a]
+            dSUM=round(float(dRow[' Closing Balance'].values), 2) #datatel Subtotal Number
+            aSUM=round(float(aRow['INVOICE AMOUNT'].values), 2) #access Subtotal Number
+            if  dSUM==aSUM: 
+                hyphen=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
+                print(d, " $",dSUM, " datatel matches access: $",aSUM, " ", hyphen)
+            else: # Datatell and Access account subtotal does NOT equal:
+                check.add(a) #store accounts that need checked
+                #print(dSUM, " datatel DOES NOT match access ", aSUM, ". Difference is: ", round(float(dSUM-aSUM), 2) )
+                
+print("\n These accounts do not balance according to Python: ")
+for a in check:
+    d=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
+    print(a, " Access-----check account----- Datatel", d)
+
+print("Done. Completed Analysing Budgets Datatel Access in: ", round(time.time()-start, 3), " seconds");
