@@ -10,7 +10,7 @@ import csv, time
 import pandas as pd
 from datetime import date
 
-#Put file location below:
+#Save file location with location below:
 access=r'C:\Users\scott\OneDrive\Desktop\AccessFY22.xlsx'
 datatel=r'C:\Users\scott\OneDrive\Desktop\DatatelFY22.xlsx'
 
@@ -34,12 +34,13 @@ dataTotals['GL Account'] = dataTotals['GL Account'].str.replace('-', '') #gets r
 for d in dataTotals['GL Account']: #checks each account in Datatel...
     for a in accessTotals['ACCOUNT ID']: # checks each account in Access...
         if d==a: #if Datatel and Access Account are the same then do the following:
-            dRow=dataSubtotals.loc[dataTotals['GL Account']==d]
-            aRow=accessSubtotals.loc[accessTotals['ACCOUNT ID']==a]
+            dRow=dataTotals.loc[dataTotals['GL Account']==d]
+            aRow=accessTotals.loc[accessTotals['ACCOUNT ID']==a]
             dSUM=round(float(dRow['Ending Amount'].values), 2) #datatel Subtotal Number
             aSUM=round(float(aRow['INVOICE AMOUNT'].values),2) #access Subtotal Number
             if  dSUM==aSUM: 
-                print(dSUM, " datatel matches access total: ", aSUM, d, " Account ID ", a)
+                hyphen=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
+                print(d, dSUM, "datatel matches access: ", aSUM, hyphen)
             else:
                 hyphens=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
                 print(a, " Access-----check account----- Datatel", hyphens)
@@ -57,7 +58,7 @@ When a new transaction with real money pulls, a D is required in REQ# column in 
 print("----- START SECTION2; Checking for Missing Ds in REQ Column ----- ")
 accessDF=accessDF.dropna(subset=['REQ#'])
 accessDF=accessDF.loc[accessDF['REQ#'].str.contains("D", case=False)] #keeps only access rows with a "D"
-print(accessDF)
+#print(accessDF)
 accessDsum=accessDF.groupby('ACCOUNT ID')['INVOICE AMOUNT'].sum().reset_index()
 
 #get each individual Datatel Account Number:
@@ -70,7 +71,6 @@ for acc in dataAccounts:
 check=set()
 
 for account in accessDsum['ACCOUNT ID']: # checks each account in Access...
-    print(account)
     aRow=accessDsum.loc[accessDsum['ACCOUNT ID']==account]
     dRow=dataTotals.loc[dataTotals['GL Account']==d]
     accessDtotal=round(float(aRow['INVOICE AMOUNT'].values),2) #access Subtotal Number
@@ -78,7 +78,8 @@ for account in accessDsum['ACCOUNT ID']: # checks each account in Access...
     if account in dataAcc: #only need to check for Datatel Accounts 
         hyphens=account[0:5]+"-"+account[5:7]+"-"+account[7:16]+"-"+account[16:] 
         if accessDtotal==dataTotal:
-            print(account, " is correct and missing not Ds in Access in REQ# column", hyphens)
+            continue; #nothing else is needed to be done.
+            #print(account, " is likely correct ", hyphens)
         elif accessDtotal<dataTotal:
             print(account, " Missing Ds in Access in REQ# column: ", hyphens)
         elif accessDtotal>dataTotal:
