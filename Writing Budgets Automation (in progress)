@@ -1,0 +1,56 @@
+'''
+MONTHLY BUDGET REPORT AUTOMATION:
+This should write out monthly reports from a Datatel report to an Excel file.
+This can be applied to a monthly, quarterly, or yearly report.
+'''
+import csv, time
+import pandas as pd
+from datetime import date
+
+print("Running Monthly Automation Report on: ", date.today() )
+start=time.time()
+
+datatel=r'C:\Users\scott\OneDrive\Desktop\Excel\MonthlyBudget5.xlsx'
+budget=r'C:\Users\scott\OneDrive\Desktop\Excel\278000 ADMIN FY21.xlsx' 
+month='June'
+
+dataDF = pd.read_excel(datatel) 
+dataDF = pd.DataFrame(dataDF, columns=['GL Account', ' Monthly Debits', ' Monthly Credits']) #turns dataframe into tuple
+head=dataDF.columns # Index(['GL Account', ' Monthly Debits', ' Monthly Credits'], dtype='object')
+dataDF['Ending'] = dataDF.apply(lambda x: x[' Monthly Debits'] - x[' Monthly Credits'], axis = 1)   
+
+'''
+Subtract Two Dataframes:
+https://www.delftstack.com/howto/python-pandas/pandas-subtract-two-columns/
+df['d - a'] = df['d'] - df['a']
+'''
+
+budgetDF = pd.read_excel(budget, sheet_name='Monthly Budget Report')
+budgetDF = budgetDF.iloc[1: , :].values #removes first row
+budgetDF = pd.DataFrame(budgetDF[5:7])
+print(budgetDF.head() )
+
+'''
+with open(budget, 'rb', encoding='utf-8', errors='ignore') as file:
+    reader = csv.reader(file)
+    print(reader)
+    for r in reader:
+        print(r)
+'''
+
+'''
+#Append a file:
+f = open("demofile2.txt", "a")
+f.write("Now the file has more content!")
+f.close()
+
+Failed due to permissionError:
+f = open(budget, "a") #PermissionError: [Errno 13] Permission denied:
+sheet = f.sheet_by_name('Monthly Budget Report') #PermissionError: [Errno 13] Permission denied:
+
+#open and read the file after the appending:
+f = open("demofile2.txt", "r")
+print(f.read())
+'''
+
+print("Done writing monthly budget report, completed in ", round(time.time()-start, 3), " seconds")
