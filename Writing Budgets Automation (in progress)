@@ -11,7 +11,7 @@ print("Running Monthly Automation Report on: ", date.today() )
 start=time.time()
 
 datatel=r'C:\Users\scott\OneDrive\Desktop\Excel\MonthlyBudget5.xlsx'
-budget=r'C:\Users\scott\OneDrive\Desktop\Excel\278000 ADMIN FY21.xlsx' 
+budget=r'C:\Users\scott\OneDrive\Desktop\Excel\ADMIN FY21.xlsx' 
 month='June'
 
 dataDF = pd.read_excel(datatel) 
