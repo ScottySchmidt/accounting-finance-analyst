@@ -61,16 +61,15 @@ print("Done writing monthly budget report, completed in ", round(time.time()-sta
 
 #PRACTICE BUDGET WITH FAKE NUMBERS:
 import csv, time
-import xlwings as xw
 import pandas as pd
-from pandas import ExcelWriter
-from pandas import ExcelFile
 
+#Put file location and month:
+file=r'C:\Users\scott\OneDrive\Desktop\Excel\practice.xlsx'
 month='June'
+
 accounts=dict = {12: 45.62, 23: 89, 99: 777}
 accKeys=accounts.keys()
-
-file=r'C:\Users\scott\OneDrive\Desktop\Excel\practice.xlsx'
+start=time.time()
  
 df = pd.read_excel(file)
 dfID=df['Account id']
@@ -87,7 +86,5 @@ try:
     print("created new budget excel sheet called: ", newFile)
     writer.save()
 except:
-    print("error happened creating new budget excel file")
-print("Done.")
-
-#with open(budget, 'a+', encoding='utf-8', errors='ignore') as file:
+    print("error happened creating new budget excel file", newFile)
+print("Done writing monthly budget report, completed in ", round(time.time()-start, 3), " seconds")
