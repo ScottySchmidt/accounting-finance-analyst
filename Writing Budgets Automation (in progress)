@@ -52,5 +52,42 @@ sheet = f.sheet_by_name('Monthly Budget Report') #PermissionError: [Errno 13] Pe
 f = open("demofile2.txt", "r")
 print(f.read())
 '''
-
 print("Done writing monthly budget report, completed in ", round(time.time()-start, 3), " seconds")
+
+
+
+
+=================================================================================================
+
+#PRACTICE BUDGET WITH FAKE NUMBERS:
+import csv, time
+import xlwings as xw
+import pandas as pd
+from pandas import ExcelWriter
+from pandas import ExcelFile
+
+month='June'
+accounts=dict = {12: 45.62, 23: 89, 99: 777}
+accKeys=accounts.keys()
+
+file=r'C:\Users\scott\OneDrive\Desktop\Excel\practice.xlsx'
+ 
+df = pd.read_excel(file)
+dfID=df['Account id']
+for acc in accKeys:
+    if acc in list(dfID):
+        index = df[dfID==acc].index.values.astype(int)[0]
+        #print(acc, index)
+        amount=accounts[acc]
+        df.at[index, month] = amount
+try:
+    newFile=r'C:\Users\scott\OneDrive\Desktop\Excel\monthBudget'+month+'.xlsx'
+    writer = ExcelWriter(newFile)
+    df.to_excel(writer,'Sheet1', index=False)
+    print("created new budget excel sheet called: ", newFile)
+    writer.save()
+except:
+    print("error happened creating new budget excel file")
+print("Done.")
+
+#with open(budget, 'a+', encoding='utf-8', errors='ignore') as file:
