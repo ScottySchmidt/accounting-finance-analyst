@@ -1,5 +1,72 @@
 '''
 MONTHLY BUDGET REPORT AUTOMATION:
+This will automatically create a Monthly Budget from Data (Database) report to an Excel file;
+This concept can be applied to a daily, monthly, quarterly, or yearly report;
+Therefore, this method does NOT work if the final budget Excel sheet has formulas.
+'''
+import csv, time
+import pandas as pd
+from datetime import date
+
+#Add the following info:
+data=r'C:\Users\scott\OneDrive\Desktop\Excel\JuneDataAdmin.xlsx'
+budget=r'C:\Users\scott\OneDrive\Desktop\Excel\278000 ADMIN FY21.xlsx' 
+month='June'
+name='Admin'
+acckeys={}
+
+#Program starts, no need to change anything below:
+print("Running Budget Analysis report on: ", date.today().strftime("%m-%d-%Y") )
+start=time.time()
+
+#Datatel:
+dataDF = pd.read_excel(data) 
+dataDF = pd.DataFrame(dataDF, columns=['GL Account', ' Monthly Debits', ' Monthly Credits']) #turns dataframe into tuple
+head=dataDF.columns # Index(['GL Account', ' Monthly Debits', ' Monthly Credits'], dtype='object')
+dataDF['Ending'] = dataDF.apply(lambda x: x[' Monthly Debits'] - x[' Monthly Credits'], axis = 1)  
+dataDF=dataDF[['GL Account', 'Ending']]
+dataDF['GL Account'] = dataDF.apply(lambda x: x['GL Account'][19:25], axis = 1)
+dataDF= dataDF[dataDF['Ending'] != 0]
+dataList= dataDF.to_dict('list')
+#print(dataDF)
+
+
+#Access (budgets):
+adf = pd.read_excel(budget, sheet_name="Monthly Budget Report")
+adf = pd.DataFrame(adf, columns=['Account', month] )
+adf = adf.dropna(subset=['Account'])
+
+#Combine data to access DF:
+for d in dataList['GL Account']:
+    for a in adf['Account']:
+        if str(d)==str(a):
+            index = dataList['GL Account'].index(d)
+            amount=dataList['Ending'][index]
+            adf.at[index, month]=amount
+print("Done combining data with Access in ", round(time.time()-start, 3), " seconds")       
+
+#Create new budget sheet:
+try:
+    newFile=r'C:\Users\scott\OneDrive\Desktop\Excel\createdMO'+month+'.xlsx'
+    writer = ExcelWriter(newFile)
+    adf.to_excel(writer,'Sheet1', index=False)
+    print("created new budget excel sheet called: ", newFile)
+    writer.save()
+except:
+    print("error happened creating new budget excel file", newFile)
+print("Done writing monthly budget report, completed in ", round(time.time()-start, 3), " seconds")
+
+
+
+
+
+===================================================
+
+
+
+'''
+MONTHLY BUDGET REPORT AUTOMATION:
+This verision assumes no Excel formulas on the budget Excel sheet.
 This should write out monthly reports from a Datatel report to an Excel file.
 This can be applied to a monthly, quarterly, or yearly report.
 '''
