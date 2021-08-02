@@ -9,7 +9,7 @@ from datetime import date
 
 #Add the following info:
 data=r'C:\Users\scott\OneDrive\Desktop\Excel\JuneDataAdmin.xlsx'
-budget=r'C:\Users\scott\OneDrive\Desktop\Excel\278000 ADMIN FY21.xlsx' 
+budget=r'C:\Users\scott\OneDrive\Desktop\Excel\ADMIN FY21.xlsx' 
 month='June'
 name='Admin'
 acckeys={}
