@@ -62,9 +62,8 @@ print("Done writing monthly budget report, completed in ", round(time.time()-sta
 ===================================================
 
 
-
 '''
-MONTHLY BUDGET REPORT AUTOMATION:
+MONTHLY BUDGET REPORT AUTOMATION ORIGINAL SIMPLE VERSION:
 This verision assumes no Excel formulas on the budget Excel sheet.
 This should write out monthly reports from a Datatel report to an Excel file.
 This can be applied to a monthly, quarterly, or yearly report.
