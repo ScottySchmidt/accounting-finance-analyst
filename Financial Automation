@@ -1,5 +1,5 @@
 '''
-This compares a detailed Datatel report to Access (NOT a summary Datatel);
+This compares a detailed data report to Access (NOT a summary data);
 This will compare around 2000 accounting transactions between Datatel (real money) and Access (accounting records);;
 Some transactions may not have had a transaction yet, but this helps find the ones that are already balanced;
 
