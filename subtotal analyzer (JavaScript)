@@ -1,6 +1,8 @@
-// Here is the sample website: https://codepen.io/ScottFSchmidt/pen/yLaoBQw
-// Python verision should only be used because it is insanely easy to maniplate the data:
-// https://github.com/ScottFrederickSchmidt/AccountingAutomation/blob/main/Subtotal%20Analyzer%20(Python)
+'''
+USE THE PYTHON VERSION ONLY! Python can easily manipulate the data.
+DO NOT USE THE JAVASCRIPT CODE EVER IT WAS A FUN PROJECT ONLY WHILE WATCHING NETFLIX.
+Here is the sample website: https://codepen.io/ScottFSchmidt/pen/yLaoBQw
+'''
 
 function allPermutations(items) {
   let results = [];
