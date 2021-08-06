@@ -1,10 +1,10 @@
 '''
 This compares a detailed data report to Access (NOT a summary data);
-This will compare over 2000 accounting transactions between Data (real money) and Access (accounting records);
+This can compare thousands of accounting transactions between official transaction data and Access (accounting records);
 Some transactions may not have had a transaction yet, but this helps find the ones that are already balanced;
 
 Section 2 will help decide which transactions should have a "D" added in REQ column;
-A D in REQ column means the real money has a transaction according to3 Datatel.
+A D in REQ column stands for "data" which means the transaction has officially posted.
 '''
 import csv, time
 import pandas as pd
