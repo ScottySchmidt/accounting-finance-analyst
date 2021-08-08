@@ -124,32 +124,40 @@ print("Done writing monthly budget report, completed in ", round(time.time()-sta
 
 =================================================================================================
 
-#PRACTICE BUDGET WITH FAKE NUMBERS:
-import csv, time
+'''
+PRACTICE WRITING (APPENDING) TO EXCEL SHEET WITHOUT USING EXCEL WRITER;
+This should use the function, open. Therefore, it keys all the current Excel formulas within the Excel sheet.
+Using  df = pd.read_excel(file)  and  df.to_excel(writer,'Sheet1', index=False)  will NOT carry over Excel formulas.
+#https://stackoverflow.com/questions/58160030/how-to-read-xlsx-as-pandas-dataframe-with-formulas-as-strings
+'''
+
+from openpyxl import load_workbook
 import pandas as pd
+from pandas import ExcelWriter
+from pandas import ExcelFile
+import numpy as np
 
-#Put file location and month:
-file=r'C:\Users\scott\OneDrive\Desktop\Excel\practice.xlsx'
-month='June'
+file=r'C:\Users\scott\OneDrive\Desktop\Excel\write.xlsx'
+newFile=r'C:\Users\scott\OneDrive\Desktop\Excel\writerNEW.xlsx'
+month='July'
 
-accounts=dict = {12: 45.62, 23: 89, 99: 777}
-accKeys=accounts.keys()
-start=time.time()
- 
-df = pd.read_excel(file)
-dfID=df['Account id']
-for acc in accKeys:
-    if acc in list(dfID):
-        index = df[dfID==acc].index.values.astype(int)[0]
-        #print(acc, index)
-        amount=accounts[acc]
-        df.at[index, month] = amount
-try:
-    newFile=r'C:\Users\scott\OneDrive\Desktop\Excel\monthBudget'+month+'.xlsx'
-    writer = ExcelWriter(newFile)
-    df.to_excel(writer,'Sheet1', index=False)
-    print("created new budget excel sheet called: ", newFile)
-    writer.save()
-except:
-    print("error happened creating new budget excel file", newFile)
-print("Done writing monthly budget report, completed in ", round(time.time()-start, 3), " seconds")
+july={0: "1.21", 2: "12.76", 4: "39.45"}
+
+wb = load_workbook(file)
+sheet_name = wb.get_sheet_names()[0]
+ws = wb[sheet_name]
+df = pd.DataFrame(ws.values)
+df.columns = df.iloc[0] #Index(['Account id', 'May', 'June', 'July', None], dtype='object', name=0)
+#colInd=df.columns.get_loc(month)
+colInd='July'
+
+for j in july:
+    amount=july[j]
+    df.at[j+1, colInd]=float(amount)
+print(df)
+    
+writer = ExcelWriter(newFile)
+df.to_excel(writer,'Sheet1', index=False, columns=None, header=False)
+writer.save()
+
+print("check new file: ", newFile)
