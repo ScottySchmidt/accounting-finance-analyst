@@ -1,128 +1,68 @@
 '''
 MONTHLY BUDGET REPORT AUTOMATION:
-This will automatically create a Monthly Budget from Data (Database) report to an Excel file;
-This concept can be applied to a daily, monthly, quarterly, or yearly report;
+This will automatically "write data" with Python from a Database report to a budget Excel file.
+This example concept can be applied to a daily, monthly, quarterly, or yearly report.
 '''
+
 import csv, time
+from openpyxl import load_workbook
 import pandas as pd
+from pandas import ExcelWriter
+from pandas import ExcelFile
 from datetime import date
 
-#Add the following info:
+#Add the following excel locations:
 data=r'C:\Users\scott\OneDrive\Desktop\Excel\JuneDataAdmin.xlsx'
-budget=r'C:\Users\scott\OneDrive\Desktop\Excel\ADMIN FY21.xlsx' 
-month='June'
-name='Admin'
-acckeys={}
+admin=r'C:\Users\scott\OneDrive\Desktop\Excel\278000 ADMIN FY21.xlsx' 
+month='June' #What month?
 
 #Program starts, no need to change anything below:
-print("Running Budget Analysis report on: ", date.today().strftime("%m-%d-%Y") )
+print("Writing report on: ", date.today().strftime("%m-%d-%Y") )
 start=time.time()
 
-#Datatel:
-dataDF = pd.read_excel(data) 
-dataDF = pd.DataFrame(dataDF, columns=['GL Account', ' Monthly Debits', ' Monthly Credits']) #turns dataframe into tuple
-head=dataDF.columns # Index(['GL Account', ' Monthly Debits', ' Monthly Credits'], dtype='object')
-dataDF['Ending'] = dataDF.apply(lambda x: x[' Monthly Debits'] - x[' Monthly Credits'], axis = 1)  
-dataDF=dataDF[['GL Account', 'Ending']]
-dataDF['GL Account'] = dataDF.apply(lambda x: x['GL Account'][19:25], axis = 1)
-dataDF= dataDF[dataDF['Ending'] != 0]
-dataList= dataDF.to_dict('list')
-#print(dataDF)
+#DATA REPORT:
+data = pd.read_excel(data) 
+data = pd.DataFrame(data, columns=['GL Account', ' Monthly Debits', ' Monthly Credits']) #turns dataframe into tuple
+data['Ending'] = data.apply(lambda x: x[' Monthly Debits'] - x[' Monthly Credits'], axis = 1)  
+head=data.columns #Index(['GL Account', ' Monthly Debits', ' Monthly Credits', 'Ending'], dtype='object')
+data['GL Account'] = data.apply(lambda x: x['GL Account'][19:25], axis = 1).astype(int)
 
 
-#Access (budgets):
-adf = pd.read_excel(budget, sheet_name="Monthly Budget Report")
-adf = pd.DataFrame(adf, columns=['Account', month] )
-adf = adf.dropna(subset=['Account'])
+#ACCESS REPORT:
+wb = load_workbook(admin)
+ws = wb["Monthly Budget Report"].values #keeps forumulas
+df = pd.DataFrame(ws)
+df.columns = df.iloc[0] 
 
-#Combine data to access DF:
-for d in dataList['GL Account']:
-    for a in adf['Account']:
-        if str(d)==str(a):
-            index = dataList['GL Account'].index(d)
-            amount=dataList['Ending'][index]
-            adf.at[index, month]=amount
-print("Done combining data with Access in ", round(time.time()-start, 3), " seconds")       
+# MANIPULATE DATA, ADD NEW MONTH:
+for d in data['GL Account']:
+    for account in df['Account']:
+        if str(d)==str(account):
+            i = data[data['GL Account']==int(account)].index[0]
+            amount=data['Ending'].iloc[i]
+            #print(i, account, amount)
 
-#Create new budget sheet:
+            index = df[df['Account']==int(account)].index[0] 
+            df.at[int(index), month]=amount
+            #print(index, month, amount, account)
+        
+#CREATE NEW BUDGET SHEET:
+df = df.iloc[1: , :] #delete duplicate column header
 try:
     newFile=r'C:\Users\scott\OneDrive\Desktop\Excel\createdMO'+month+'.xlsx'
     writer = ExcelWriter(newFile)
-    adf.to_excel(writer,'Sheet1', index=False)
+    df.to_excel(writer,'Sheet1', index=False)
     print("created new budget excel sheet called: ", newFile)
     writer.save()
 except:
     print("error happened creating new budget excel file", newFile)
-print("Done writing monthly budget report, completed in ", round(time.time()-start, 3), " seconds")
-
-
-
-
-
-===================================================
-
-
-'''
-MONTHLY BUDGET REPORT AUTOMATION ORIGINAL SIMPLE VERSION:
-This verision assumes no Excel formulas on the budget Excel sheet.
-This should write out monthly reports from a Datatel report to an Excel file.
-This can be applied to a monthly, quarterly, or yearly report.
-'''
-import csv, time
-import pandas as pd
-from datetime import date
-
-print("Running Monthly Automation Report on: ", date.today() )
-start=time.time()
-
-datatel=r'C:\Users\scott\OneDrive\Desktop\Excel\MonthlyBudget5.xlsx'
-budget=r'C:\Users\scott\OneDrive\Desktop\Excel\ADMIN FY21.xlsx' 
-month='June'
-
-dataDF = pd.read_excel(datatel) 
-dataDF = pd.DataFrame(dataDF, columns=['GL Account', ' Monthly Debits', ' Monthly Credits']) #turns dataframe into tuple
-head=dataDF.columns # Index(['GL Account', ' Monthly Debits', ' Monthly Credits'], dtype='object')
-dataDF['Ending'] = dataDF.apply(lambda x: x[' Monthly Debits'] - x[' Monthly Credits'], axis = 1)   
-
-'''
-Subtract Two Dataframes:
-https://www.delftstack.com/howto/python-pandas/pandas-subtract-two-columns/
-df['d - a'] = df['d'] - df['a']
-'''
-
-budgetDF = pd.read_excel(budget, sheet_name='Monthly Budget Report')
-budgetDF = budgetDF.iloc[1: , :].values #removes first row
-budgetDF = pd.DataFrame(budgetDF[5:7])
-print(budgetDF.head() )
-
-'''
-with open(budget, 'rb', encoding='utf-8', errors='ignore') as file:
-    reader = csv.reader(file)
-    print(reader)
-    for r in reader:
-        print(r)
-'''
-
-'''
-#Append a file:
-f = open("demofile2.txt", "a")
-f.write("Now the file has more content!")
-f.close()
-
-Failed due to permissionError:
-f = open(budget, "a") #PermissionError: [Errno 13] Permission denied:
-sheet = f.sheet_by_name('Monthly Budget Report') #PermissionError: [Errno 13] Permission denied:
-
-#open and read the file after the appending:
-f = open("demofile2.txt", "r")
-print(f.read())
-'''
-print("Done writing monthly budget report, completed in ", round(time.time()-start, 3), " seconds")
-
+print("Program Finished! ", round(time.time()-start, 3), " seconds")
 
 
 
 =================================================================================================
+
+
 
 '''
 PRACTICE WRITING (APPENDING) TO EXCEL SHEET WITHOUT USING EXCEL WRITER;
