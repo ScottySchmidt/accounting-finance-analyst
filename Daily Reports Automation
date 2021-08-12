@@ -3,7 +3,7 @@ DAILY REPORT AUTOMATION RECORD KEEPING:
 This records transactions on a daily basis by account number that can write directly to the file.
 The  import openpyxl as xl  is the ONLY Python way to directlt write to an Excel file. 
 This is important because using a dataframe and resaving a new file will cause the formulas and formating to disaper. 
-VBA is the only other possible way to directly write to a file whih is being severly outdated.
+VBA is the only other possible way to directly write to a file which is being severly outdated.
 '''
 
 import openpyxl as xl
