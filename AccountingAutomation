@@ -1,29 +1,30 @@
 '''
-This compares a detailed data report to Access (NOT a summary data);
-This can compare thousands of accounting transactions between official transaction data and Access (accounting records);
+This compares a detailed Datatel report to Access (NOT a summary Datatel);
+This will compare around 2000 accounting transactions instantly between Data (real money) and Access (accounting records);
 Some transactions may not have had a transaction yet, but this helps find the ones that are already balanced;
 
 Section 2 will help decide which transactions should have a "D" added in REQ column;
-A D in REQ column stands for "data" which means the transaction has officially posted.
+A D in REQ column means the real money has a transaction according to Datatel.
 '''
 import csv, time
 import pandas as pd
 from datetime import date
 
 #Save file location with location below:
-access=r'C:\Users\scott\OneDrive\Desktop\AccessFY22.xlsx'
-datatel=r'C:\Users\scott\OneDrive\Desktop\DatatelFY22.xlsx'
+access=r'C:\Users\scott\OneDrive\Desktop\access.xlsx'
+data=r'C:\Users\scott\OneDrive\Desktop\data.xlsx'
 
-print("Running Access to Datatel report on: ", date.today() )
+#Nothing to be changed below this!
+print("Running Budget Analysis report on: ", date.today().strftime("%m-%d-%Y") )
 start=time.time()
 
-#Opens Access Excel sheet:
+#ACCESS:
 accessDF=pd.read_excel(access) #Access DataFrame
 accessDF=accessDF.filter(['ACCOUNT ID', 'INVOICE AMOUNT', 'REQ#']) #Only need these 3 columns
 accessTotals = accessDF.groupby('ACCOUNT ID')['INVOICE AMOUNT'].sum().reset_index() #Sum totals by account number
 
-#Opens Datatel Excel Sheet:
-dataDF=pd.read_excel(datatel).fillna(0) #Datatel Dataframe
+#REAL DATA:
+dataDF=pd.read_excel(data).fillna(0) #Datatel Dataframe
 dataDF['Ending Amount'] = dataDF.apply(lambda x: x[' YTD Debits'] - x[' YTD Credits'], axis = 1)
 dataDF=dataDF.filter(['GL Account', 'Ending Amount'])
 dataList=dataDF.to_dict(orient='list')
@@ -31,6 +32,7 @@ dataList=dataDF.to_dict(orient='list')
 dataTotals=dataDF.groupby('GL Account')['Ending Amount'].sum().reset_index()
 dataTotals['GL Account'] = dataTotals['GL Account'].str.replace('-', '') #gets rid of Hyphens 
     
+#MANIPULATE DATA:    
 for d in dataTotals['GL Account']: #checks each account in Datatel...
     for a in accessTotals['ACCOUNT ID']: # checks each account in Access...
         if d==a: #if Datatel and Access Account are the same then do the following:
@@ -39,8 +41,9 @@ for d in dataTotals['GL Account']: #checks each account in Datatel...
             dSUM=round(float(dRow['Ending Amount'].values), 2) #datatel Subtotal Number
             aSUM=round(float(aRow['INVOICE AMOUNT'].values),2) #access Subtotal Number
             if  dSUM==aSUM: 
-                hyphen=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
-                print(d, dSUM, "datatel matches access: ", aSUM, hyphen)
+                continue; #nothing else needs to be done.
+                #hyphen=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
+                #print(d, dSUM, "datatel matches access: ", aSUM, hyphen)
             else:
                 hyphens=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
                 print(a, " Access-----check account----- Datatel", hyphens)
@@ -67,9 +70,9 @@ dataAcc=[] #final list
 
 for acc in dataAccounts:
     dataAcc.append(acc.replace('-', '') ) #removes hypens
-    
-check=set()
 
+
+#CHECK DATA FOR UNBANACED ACCOUNTS:
 for account in accessDsum['ACCOUNT ID']: # checks each account in Access...
     aRow=accessDsum.loc[accessDsum['ACCOUNT ID']==account]
     dRow=dataTotals.loc[dataTotals['GL Account']==d]
@@ -87,4 +90,4 @@ for account in accessDsum['ACCOUNT ID']: # checks each account in Access...
         else:
             print(account, "Error happened on account: ", hyphens)
 print("------Completed Section 2--------")
-print("Done. Finished comparing Access with Datatel in ", round(time.time()-start, 3), " seconds")
+print("Done. Finished comparing Access with Data in ", round(time.time()-start, 3), " seconds")
