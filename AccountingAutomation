@@ -1,20 +1,20 @@
 '''
-This compares a detailed Datatel report to Access (NOT a summary Datatel);
-This will compare around 2000 accounting transactions instantly between Data (real money) and Access (accounting records);
-Some transactions may not have had a transaction yet, but this helps find the ones that are already balanced;
+This compares a detailed data report to Access (NOT a summary Datatel).
+This will compare around 2000 accounting transactions instantly between Data (transactions) and Access (accounting records).
+Some transactions may not have had a transaction yet, but this helps find the ones that are already balanced.
 
 Section 2 will help decide which transactions should have a "D" added in REQ column;
-A D in REQ column means the real money has a transaction according to Datatel.
+A D in REQ column means a transaction has been officially posted.
 '''
 import csv, time
 import pandas as pd
 from datetime import date
 
-#Save file location with location below:
+#Save file location with two excel sheets below:
 access=r'C:\Users\scott\OneDrive\Desktop\access.xlsx'
 data=r'C:\Users\scott\OneDrive\Desktop\data.xlsx'
 
-#Nothing to be changed below this!
+#NOTHING TO BE CHANGED BELOW THIS!
 print("Running Budget Analysis report on: ", date.today().strftime("%m-%d-%Y") )
 start=time.time()
 
