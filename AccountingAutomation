@@ -6,15 +6,16 @@ Some transactions may not have had a transaction yet, but this helps find the on
 Section 2 will help decide which transactions should have a "D" added in REQ column;
 A D in REQ column means a transaction has been officially posted.
 '''
-import csv, time
-import pandas as pd
-from datetime import date
 
-#Save file location with two excel sheets below:
+#Save file location with data and access as an Excel sheet on desktop:
 access=r'C:\Users\scott\OneDrive\Desktop\access.xlsx'
 data=r'C:\Users\scott\OneDrive\Desktop\data.xlsx'
 
 #NOTHING TO BE CHANGED BELOW THIS!
+import csv, time
+import pandas as pd
+from datetime import date
+
 print("Running Budget Analysis report on: ", date.today().strftime("%m-%d-%Y") )
 start=time.time()
 
