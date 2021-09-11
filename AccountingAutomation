@@ -1,6 +1,6 @@
 '''
-This uses automation to instantly compare a detailed data report to Access of accounting records (Special note: NOT a summary Datatel).
-This will compare THOUSANDS of accounting transactions between Data (transactions) and Access (accounting records).
+This uses automation to instantly compare a detailed data report to Access of accounting records   (Special note: NOT a summary data report).
+This will compare THOUSANDS of accounting transactions between real data (transactions) and Access (database accounting records).
 Some transactions may not have had a transaction yet, but this helps find the ones that are already balanced.
 
 Section 2 will help decide which transactions should have a "D" added in REQ column.
