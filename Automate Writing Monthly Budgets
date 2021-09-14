@@ -4,17 +4,19 @@ This will automatically "write data" with Python from a Database report to a bud
 This example concept can be applied to a daily, monthly, quarterly, or yearly report.
 '''
 
+#Add the following excel locations:
+data=r'C:\Users\scott\OneDrive\Desktop\Excel\JuneDataAdmin.xlsx'
+admin=r'C:\Users\scott\OneDrive\Desktop\Excel\278000 ADMIN FY21.xlsx' 
+month='June' #What month?
+
+
+#CHANGE NOTHING BELOW:
 import csv, time
 from openpyxl import load_workbook
 import pandas as pd
 from pandas import ExcelWriter
 from pandas import ExcelFile
 from datetime import date
-
-#Add the following excel locations:
-data=r'C:\Users\scott\OneDrive\Desktop\Excel\JuneDataAdmin.xlsx'
-admin=r'C:\Users\scott\OneDrive\Desktop\Excel\278000 ADMIN FY21.xlsx' 
-month='June' #What month?
 
 #Program starts, no need to change anything below:
 print("Writing report on: ", date.today().strftime("%m-%d-%Y") )
