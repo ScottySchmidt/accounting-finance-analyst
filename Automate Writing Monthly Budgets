@@ -2,6 +2,8 @@
 MONTHLY BUDGET REPORT AUTOMATION:
 This will automatically "write data" with Python from a Database report to a budget Excel file.
 This example concept can be applied to a daily, monthly, quarterly, or yearly report.
+A complex formating Excel sheet with formulas cannot be fully automated.
+Instead, one must automate the "new" sheet into a different Excel sheet and simply copy/paste the new column.
 '''
 
 #Add the following excel locations:
@@ -63,7 +65,6 @@ print("Program Finished! ", round(time.time()-start, 3), " seconds")
 
 
 =================================================================================================
-
 
 
 '''
