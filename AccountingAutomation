@@ -28,9 +28,8 @@ dataDF=pd.read_excel(data).fillna(0) #Datatel Dataframe
 dataDF['Ending Amount'] = dataDF.apply(lambda x: x[' YTD Debits'] - x[' YTD Credits'], axis = 1)
 dataDF=dataDF.filter(['GL Account', 'Ending Amount'])
 dataList=dataDF.to_dict(orient='list')
-
 dataTotals=dataDF.groupby('GL Account')['Ending Amount'].sum().reset_index()
-dataTotals['GL Account'] = dataTotals['GL Account'].str.replace('-', '') #gets rid of Hyphens 
+dataTotals['GL Account'] = dataTotals['GL Account'].str.replace('-', '') #gets rid of hyphens 
     
 #MANIPULATE DATA:    
 for d in dataTotals['GL Account']: #checks each account in Datatel...
@@ -52,9 +51,9 @@ print("Finished matching datatel to access accounts in: ", round(time.time()-sta
 print("----------END SECTION1 ---------- \n")
 
 '''
-SECTION 2: Check for Missing D in Req Column;
-When something gets posted in Datatel, Access must be updated with a D;
-Normally, this takes a great deal of time (10 hours a week) by having to check EVERY individual account;
+SECTION 2: Check for Missing D in Req Column:
+When something gets posted in Datatel, Access must be updated with a D.
+Normally, this takes a great deal of time (10 hours a week) by having to check EVERY individual account.
 When a new transaction with real money pulls, a D is required in REQ# column in Access.
 '''
 
@@ -70,7 +69,6 @@ dataAcc=[] #final list
 
 for acc in dataAccounts:
     dataAcc.append(acc.replace('-', '') ) #removes hypens
-
 
 #CHECK DATA FOR UNBANACED ACCOUNTS:
 for account in accessDsum['ACCOUNT ID']: # checks each account in Access...
