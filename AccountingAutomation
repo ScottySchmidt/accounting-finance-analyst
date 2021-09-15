@@ -47,7 +47,7 @@ for d in dataTotals['GL Account']: #checks each account in Datatel...
                 hyphens=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
                 print(a, " Access-----check account----- Datatel", hyphens)
                 #print(dSUM, " datatel DOES NOT match access ", aSUM, ". Difference is: ", round(float(dSUM-aSUM), 2) 
-print("Finished matching datatel to access accounts in: ", round(time.time()-start, 3), " seconds");
+print("Finished matching data to access accounts in: ", round(time.time()-start, 3), " seconds");
 print("----------END SECTION1 ---------- \n")
 
 '''
@@ -88,4 +88,4 @@ for account in accessDsum['ACCOUNT ID']: # checks each account in Access...
         else:
             print(account, "Error likely happened on account: ", hyphens)
 print("------Completed Section 2--------")
-print("Done. Finished comparing Access with Data in ", round(time.time()-start, 3), " seconds")
+print("Done. Finished comparing Access with data in ", round(time.time()-start, 3), " seconds")
