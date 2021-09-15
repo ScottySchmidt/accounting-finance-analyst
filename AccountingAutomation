@@ -52,7 +52,7 @@ print("----------END SECTION1 ---------- \n")
 
 '''
 SECTION 2: Check for Missing D in Req Column:
-When something gets posted in Datatel, Access must be updated with a D.
+When something has posted as a real data transaction, Access 'Req' column must be updated with a D.
 Normally, this takes a great deal of time (10 hours a week) by having to check EVERY individual account.
 When a new transaction with real money pulls, a D is required in REQ# column in Access.
 '''
@@ -86,6 +86,6 @@ for account in accessDsum['ACCOUNT ID']: # checks each account in Access...
         elif accessDtotal>dataTotal:
             print(account, " account likely has too many D in REQ column: ", hyphens)
         else:
-            print(account, "Error happened on account: ", hyphens)
+            print(account, "Error likely happened on account: ", hyphens)
 print("------Completed Section 2--------")
 print("Done. Finished comparing Access with Data in ", round(time.time()-start, 3), " seconds")
