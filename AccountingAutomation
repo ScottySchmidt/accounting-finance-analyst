@@ -46,14 +46,14 @@ for d in dataTotals['GL Account']: #checks each account in Datatel...
             else:
                 hyphens=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
                 print(a, " Access-----check account----- Datatel", hyphens)
-                #print(dSUM, " datatel DOES NOT match access ", aSUM, ". Difference is: ", round(float(dSUM-aSUM), 2) 
+                #print(dSUM, " data DOES NOT match access ", aSUM, ". Difference is: ", round(float(dSUM-aSUM), 2) 
 print("Finished matching data to access accounts in: ", round(time.time()-start, 3), " seconds");
 print("----------END SECTION1 ---------- \n")
 
 '''
 SECTION 2: Check for Missing D in Req Column:
 When something has posted as a real data transaction, Access 'Req' column must be updated with a D.
-Normally, this takes a great deal of time (10 hours a week) by having to check EVERY individual account.
+Normally, this takes a great deal of time by having to check EVERY individual account.
 When a new transaction with real money pulls, a D is required in REQ# column in Access.
 '''
 
@@ -63,7 +63,7 @@ accessDF=accessDF.loc[accessDF['REQ#'].str.contains("D", case=False)] #keeps onl
 #print(accessDF)
 accessDsum=accessDF.groupby('ACCOUNT ID')['INVOICE AMOUNT'].sum().reset_index()
 
-#get each individual Datatel Account Number:
+#get each individual account number:
 dataAccounts=dataDF['GL Account'].unique() #finds only unique accounts
 dataAcc=[] #final list
 
@@ -75,8 +75,8 @@ for account in accessDsum['ACCOUNT ID']: # checks each account in Access...
     aRow=accessDsum.loc[accessDsum['ACCOUNT ID']==account]
     dRow=dataTotals.loc[dataTotals['GL Account']==d]
     accessDtotal=round(float(aRow['INVOICE AMOUNT'].values),2) #access Subtotal Number
-    dataTotal=round(float(dRow['Ending Amount'].values), 2) #datatel Subtotal Number
-    if account in dataAcc: #only need to check for Datatel Accounts 
+    dataTotal=round(float(dRow['Ending Amount'].values), 2) #datat Subtotal Number
+    if account in dataAcc: #only need to check for Data Accounts 
         hyphens=account[0:5]+"-"+account[5:7]+"-"+account[7:16]+"-"+account[16:] 
         if accessDtotal==dataTotal:
             continue; #nothing else is needed to be done.
