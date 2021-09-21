@@ -24,7 +24,7 @@ accessDF=accessDF.filter(['ACCOUNT ID', 'INVOICE AMOUNT', 'REQ#']) #Only need th
 accessTotals = accessDF.groupby('ACCOUNT ID')['INVOICE AMOUNT'].sum().reset_index() #Sum totals by account number
 
 #REAL DATA:
-dataDF=pd.read_excel(data).fillna(0) #Datatel Dataframe
+dataDF=pd.read_excel(data).fillna(0) #Data Dataframe
 dataDF['Ending Amount'] = dataDF.apply(lambda x: x[' YTD Debits'] - x[' YTD Credits'], axis = 1)
 dataDF=dataDF.filter(['GL Account', 'Ending Amount'])
 dataList=dataDF.to_dict(orient='list')
@@ -32,20 +32,20 @@ dataTotals=dataDF.groupby('GL Account')['Ending Amount'].sum().reset_index()
 dataTotals['GL Account'] = dataTotals['GL Account'].str.replace('-', '') #gets rid of hyphens 
     
 #MANIPULATE DATA:    
-for d in dataTotals['GL Account']: #checks each account in Datatel...
+for d in dataTotals['GL Account']: #checks each data account 
     for a in accessTotals['ACCOUNT ID']: # checks each account in Access...
-        if d==a: #if Datatel and Access Account are the same then do the following:
+        if d==a: #if Dataand Access Account are the same then do the following:
             dRow=dataTotals.loc[dataTotals['GL Account']==d]
             aRow=accessTotals.loc[accessTotals['ACCOUNT ID']==a]
-            dSUM=round(float(dRow['Ending Amount'].values), 2) #datatel Subtotal Number
+            dSUM=round(float(dRow['Ending Amount'].values), 2) #data Subtotal Number
             aSUM=round(float(aRow['INVOICE AMOUNT'].values),2) #access Subtotal Number
             if  dSUM==aSUM: 
                 continue; #nothing else needs to be done.
                 #hyphen=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
-                #print(d, dSUM, "datatel matches access: ", aSUM, hyphen)
+                #print(d, dSUM, "data matches access: ", aSUM, hyphen)
             else:
                 hyphens=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
-                print(a, " Access-----check account----- Datatel", hyphens)
+                print(a, " Access-----check account----- Data", hyphens)
                 #print(dSUM, " data DOES NOT match access ", aSUM, ". Difference is: ", round(float(dSUM-aSUM), 2) 
 print("Finished matching data to access accounts in: ", round(time.time()-start, 3), " seconds");
 print("----------END SECTION1 ---------- \n")
