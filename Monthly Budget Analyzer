@@ -13,7 +13,7 @@ start=time.time()
 
 #Put Location of Excel Files here:
 access=r'C:\Users\scott\OneDrive\Desktop\AccessBudget.xlsx'
-datat=r'C:\Users\scott\OneDrive\Desktop\DatatelBudget.xlsx'
+datat=r'C:\Users\scott\OneDrive\Desktop\DataBudget.xlsx'
 
 #Opens Access Excel sheet:
 accessDF=pd.read_excel(access) #Access DataFrame
@@ -21,13 +21,13 @@ accessDF=accessDF.dropna(subset=['REQ#'])
 accessDF=accessDF.filter(['ACCOUNT NUMBER', 'INVOICE AMOUNT'])
 accessTotals = accessDF.groupby('ACCOUNT NUMBER')['INVOICE AMOUNT'].sum().reset_index()
 
-#Opens Datatel Excel sheets:
-dataDF=pd.read_excel(datat) #Datatel Dataframe
+#Opens Data Excel sheets:
+dataDF=pd.read_excel(datat) #Data Dataframe
 dataDF=dataDF[['GL Account', ' Closing Balance']]
 dataTotals=dataDF.groupby('GL Account')[' Closing Balance'].sum().reset_index()
 dataTotals['GL Account'] = dataTotals['GL Account'].str.replace('-', '') #gets rid of Hyphens 
 
-#get each individual Datatel Account Number:
+#get each individual Datat Account Number:
 dataAccounts=dataDF['GL Account'].unique() #finds only unique accounts
 dataAcc=[] #final list
 
@@ -36,23 +36,23 @@ for acc in dataAccounts:
     
 check=set()
 
-for d in dataAcc: #checks each account in Datatel...
+for d in dataAcc: #checks each real account in dta.
     for a in accessTotals['ACCOUNT NUMBER']: # checks each account in Access...
-        if d==a: #if Datatel and Access Account are the same then do the following:
+        if d==a: #if Data and Access Account are the same then do the following:
             dRow=dataTotals.loc[dataTotals['GL Account']==d]
             aRow=accessTotals.loc[accessTotals['ACCOUNT NUMBER']==a]
-            dSUM=round(float(dRow[' Closing Balance'].values), 2) #datatel Subtotal Number
+            dSUM=round(float(dRow[' Closing Balance'].values), 2) #data Subtotal Number
             aSUM=round(float(aRow['INVOICE AMOUNT'].values), 2) #access Subtotal Number
             if  dSUM==aSUM: 
                 hyphen=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
-                print(d, " $",dSUM, " datatel matches access: $",aSUM, " ", hyphen)
-            else: # Datatell and Access account subtotal does NOT equal:
+                print(d, " $",dSUM, " datat matches access: $",aSUM, " ", hyphen)
+            else: # Datat and Access account subtotal does NOT equal:
                 check.add(a) #store accounts that need checked
-                #print(dSUM, " datatel DOES NOT match access ", aSUM, ". Difference is: ", round(float(dSUM-aSUM), 2) )
+                #print(dSUM, " data DOES NOT match access ", aSUM, ". Difference is: ", round(float(dSUM-aSUM), 2) )
                 
 print("\n These accounts do not balance according to Python: ")
 for a in check:
     d=a[0:5]+"-"+a[5:7]+"-"+a[7:16]+"-"+a[16:] #adds hyphens to account number, easier to copy/paste
-    print(a, " Access-----check account----- Datatel", d)
+    print(a, " Access-----check account----- Datat", d)
 
-print("Done. Completed Analysing Budgets Datatel Access in: ", round(time.time()-start, 3), " seconds");
+print("Done. Completed Analysing Budgets Data Access in: ", round(time.time()-start, 3), " seconds");
