@@ -3,7 +3,6 @@ MONTHLY BUDGET CONCISE REPORT:
 This will detect and analyze real data payments and compare them to the montly budgets. 
 This code can detect instantly if the current budgets have missing transactions or new transactions that have not been recorded.
 Often, it can also detect a transpositional error such as accountant misrecording the data entry. 
-Also, refunds and/or changes in the payments could mean that the budgets need to be updated. 
 '''
 import csv, time
 import pandas as pd
@@ -14,7 +13,7 @@ start=time.time()
 
 #Put Location of Excel Files here:
 access=r'C:\Users\scott\OneDrive\Desktop\AccessBudget.xlsx'
-datatel=r'C:\Users\scott\OneDrive\Desktop\DatatelBudget.xlsx'
+datat=r'C:\Users\scott\OneDrive\Desktop\DatatelBudget.xlsx'
 
 #Opens Access Excel sheet:
 accessDF=pd.read_excel(access) #Access DataFrame
@@ -23,7 +22,7 @@ accessDF=accessDF.filter(['ACCOUNT NUMBER', 'INVOICE AMOUNT'])
 accessTotals = accessDF.groupby('ACCOUNT NUMBER')['INVOICE AMOUNT'].sum().reset_index()
 
 #Opens Datatel Excel sheets:
-dataDF=pd.read_excel(datatel) #Datatel Dataframe
+dataDF=pd.read_excel(datat) #Datatel Dataframe
 dataDF=dataDF[['GL Account', ' Closing Balance']]
 dataTotals=dataDF.groupby('GL Account')[' Closing Balance'].sum().reset_index()
 dataTotals['GL Account'] = dataTotals['GL Account'].str.replace('-', '') #gets rid of Hyphens 
