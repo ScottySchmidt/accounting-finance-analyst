@@ -6,7 +6,7 @@ Section 2 will help decide which transactions should have a "D" added in REQ col
 A D in REQ column means a transaction has been officially posted.
 '''
 
-#Save file location with data and access as an Excel sheet on desktop:
+#Save file location with data and Access as an Excel sheet on desktop:
 access=r'C:\Users\scott\OneDrive\Desktop\access.xlsx'
 data=r'C:\Users\scott\OneDrive\Desktop\data.xlsx'
 
