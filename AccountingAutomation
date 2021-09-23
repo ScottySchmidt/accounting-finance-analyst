@@ -34,7 +34,7 @@ dataTotals['GL Account'] = dataTotals['GL Account'].str.replace('-', '') #gets r
 #MANIPULATE DATA:    
 for d in dataTotals['GL Account']: #checks each data account 
     for a in accessTotals['ACCOUNT ID']: # checks each account in Access...
-        if d==a: #if Dataand Access Account are the same then do the following:
+        if d==a: #if Data and Access Account are the same then do the following:
             dRow=dataTotals.loc[dataTotals['GL Account']==d]
             aRow=accessTotals.loc[accessTotals['ACCOUNT ID']==a]
             dSUM=round(float(dRow['Ending Amount'].values), 2) #data Subtotal Number
