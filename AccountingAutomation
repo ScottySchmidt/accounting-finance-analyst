@@ -77,7 +77,7 @@ for account in accessDsum['ACCOUNT ID']: # checks each account in Access...
     accessDtotal=round(float(aRow['INVOICE AMOUNT'].values),2) #access Subtotal Number
     dataTotal=round(float(dRow['Ending Amount'].values), 2) #datat Subtotal Number
     if account in dataAcc: #only need to check for Data Accounts 
-        hyphens=account[0:5]+"-"+account[5:7]+"-"+account[7:16]+"-"+account[16:] 
+        hyphens=account[0:5]+"-"+account[5:7]+"-"+account[7:16]+"-"+account[16:] #see note at end
         if accessDtotal==dataTotal:
             continue; #nothing else is needed to be done.
             #print(account, " is likely correct ", hyphens)
@@ -91,8 +91,8 @@ print("------Completed Section 2--------")
 print("Done. Finished comparing Access with data in ", round(time.time()-start, 3), " seconds")
 '''
 Special Note: The only reason I add back the hyphens in line 80 is so that an accounting assistant can then easily copy/paste
-the account number into a database to retrieve the records. Otherwise, the individual would have to type out the 
-account number by hand.
+the account number into a database to retrieve the records. Otherwise, the individual would have to type out the full
+account number by hand. This not only saves time but also makes the work of the accountant more enjoyable. 
 '''
 
 
