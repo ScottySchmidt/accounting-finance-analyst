@@ -1,5 +1,6 @@
 '''
 MONTHLY BUDGET CONCISE REPORT:
+This is similiar to "Accounting Automation" but the reports (i.e. specifically the column names) are different.
 This will detect and analyze real data payments and compare them to the montly budgets. 
 This code can detect instantly if the current budgets have missing transactions or new transactions that have not been recorded.
 Often, it can also detect a transpositional error such as accountant misrecording the data entry. 
