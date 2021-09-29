@@ -8,6 +8,9 @@ Often, there is a misrecorded transaction. This would mean that the accounting a
 
 The Python version should ALWAYS be used it is much easier to maniplate the data or to add additional numbers.
 Here is a JavaScript version I created for fun while watching Netflix: https://codepen.io/ScottFSchmidt/pen/yLaoBQw
+
+Last note: There are many different verisions because sometimes I was recieving a memory error. 
+I was trying to improve the processing speed so this could be used on a larger basis at the time.
 '''
 
 import itertools
