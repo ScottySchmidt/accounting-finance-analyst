@@ -2,8 +2,8 @@
 FIND ALL POSSIBLE SUBTOTALS USING PYTHON:
 This is by far the most simple yet useful script I have ever created.
 Accountants need to find a missing transaction or misrecorded transaction from hundreds of transactions on a daily basis.
-When the real money does NOT match the fake money, a human has to go through and calculate by hand hundreds of possibilities.
-Well, Python can almost instantly calculate thousands of potential subtotals within a second. 
+When the real money does NOT match the fake money, a human has to go through and calculate by hand thousands of possibilities.
+Well, Python can instantly calculate thousands of potential subtotals within a second. 
 Often, there is a misrecorded transaction. This would mean that the accounting assistant would have gone through hundreds of possibilities without finding the answer.
 
 The Python version should ALWAYS be used it is much easier to maniplate the data or to add additional numbers.
