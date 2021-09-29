@@ -89,10 +89,13 @@ for account in accessDsum['ACCOUNT ID']: # checks each account in Access...
             print(account, "Error likely happened on account: ", hyphens)
 print("------Completed Section 2--------")
 print("Done. Finished comparing Access with data in ", round(time.time()-start, 3), " seconds")
+
 '''
-Special Note: The only reason I add back the hyphens in line 80 is so that an accounting assistant can then easily copy/paste
+Line 80 Special Note: The only reason I add back the hyphens is so an accounting assistant can easily copy/paste
 the account number into a database to retrieve the records. Otherwise, the individual would have to type out the full
 account number by hand. This not only saves time but also makes the work of the accountant more enjoyable. 
+
+-------------------------------------------
 
 DISCLOSURE:
 ACCOUNTING AUTOMATION (PYTHON, VBA) SHOULD NEVER REPLACE AN ACCOUNTANT, CPA OR FINANCIAL ADVISOR:
