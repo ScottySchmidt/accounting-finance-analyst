@@ -4,6 +4,10 @@ This Python accounting automation program will compare thousands of real data tr
 
 Section 2 will help decide which transactions should have a "D" added in REQ column.
 A D in REQ column means a transaction has been officially posted.
+
+Mid and small businesses benefit simple Python automation scripts at little to no cost.  
+"Midsized companies (fewer than 1,000 employees) are more likely to spend around $10 million to $20 million at most, and small companies are not likely to have the need
+for a fully integrated SAP ERP system unless they have the likelihood of becoming midsized and then the same data applies as would a midsized company" (Monk, 2009).
 '''
 
 #Save file location with data and Access as an Excel sheet on desktop:
@@ -109,6 +113,9 @@ What Python is Superpower at:
 3)Finding a transpositional error. Was a transaction recorded as $3832.12 but was actually $3823.12? This is difficult to see with the human eye
 when there are thousands of transactions.
 4)Calculating all possible subtotals. How did our potentially ending balance end at $XX.XX?
+
+Sources:
+Monk, Ellen F.; Wagner, Brej J. (2009). Concepts in enterprise resource planning (3rd ed.). Boston: Thomson Course Technology. pp. 23–34. ISBN 978-1-4239-0179-2.
 '''
 
 
