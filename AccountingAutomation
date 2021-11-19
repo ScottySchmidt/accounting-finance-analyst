@@ -3,8 +3,7 @@ A third of an accountant's day is spent reconciling incorrect, missing or newly 
 This Python accounting automation program will compare thousands of real data transactions and database accounting records
 and can increase the efficiency of an accounting team by uo to 30%. Mid and small businesses benefit from Python automation scripts at little to no cost. 
 In fact, it has been prove that:"Midsized companies (fewer than 1,000 employees) are more likely to spend around $10 million to $20 million at most, 
-and small companies are not likely to have the need for a fully integrated SAP ERP system unless they have the likelihood of becoming midsized 
-and then the same data applies as would a midsized company" (Monk, 2009).
+and small companies are not likely to have the need for a fully integrated SAP ERP system unless they have the likelihood of becoming midsized" (Monk, 2009).
 Therefore, accounting on a frequent basis for a top 100 company in the world (or more than a million rows) should definitely use and pay the big bucks for SAP ERP.
 However, Python using pandas can easily handle csv files if less than a million rows with no RAM issues.  
 
