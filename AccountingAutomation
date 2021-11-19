@@ -5,10 +5,10 @@ This Python accounting automation program will compare thousands of real data tr
 Section 2 will help decide which transactions should have a "D" added in REQ column.
 A D in REQ column means a transaction has been officially posted.
 
-Mid and small businesses benefit simple Python automation scripts at little to no cost. Python can easily handle csv files if less than a million rows.  
+Mid and small businesses benefit simple Python automation scripts at little to no cost. Python can easily handle csv files if less than a million rows with no RAM issues.  
 "Midsized companies (fewer than 1,000 employees) are more likely to spend around $10 million to $20 million at most, and small companies are not likely to have the need
 for a fully integrated SAP ERP system unless they have the likelihood of becoming midsized and then the same data applies as would a midsized company" (Monk, 2009).
-However, accounting on a frequent basis for a top 100 company in the world (or more than a million rows) should definitely use SAP ERP.
+However, accounting on a frequent basis for a top 100 company in the world (or more than a million rows) should definitely use and pay the big bucks for SAP ERP.
 '''
 
 #Save file location with data and Access as an Excel sheet on desktop:
