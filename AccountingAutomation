@@ -1,5 +1,5 @@
 '''
-A third of an accountants day is wasted trying to reconcile missing, incorrect,or newly posted transactions.
+A third of an accountants day is wasted trying to reconcile missing, incorrect, or newly posted transactions.
 This Python accounting automation program will compare thousands of real data transactions and database accounting records.
 Some transactions may not have had a transaction yet, but this helps find the ones that are already balanced.
 
