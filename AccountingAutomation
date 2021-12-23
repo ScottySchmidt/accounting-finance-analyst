@@ -105,13 +105,11 @@ account number by hand. This not only saves time but also makes the work of the 
 
 ########################################
 
-DISCLOSURE:
-ACCOUNTING AUTOMATION (PYTHON, VBA) SHOULD NEVER REPLACE AN ACCOUNTANT, CPA OR FINANCIAL ADVISOR:
-Python can work at hyper speeds to detect new transactions, human error, transpoisitional errors, or missing transactions.
+ACCOUNTING AUTOMATION SHOULD NEVER REPLACE AN ACCOUNTANT, CPA OR FINANCIAL ADVISOR:
+Python can work at instant speeds to detect new transactions, human error, transpoisitional errors, or missing transactions.
 It may not detect every error, fraud, or have the mindset of a human.
-USE AT YOUR OWN DISCLOSURE AND RESEARCH.
 
-What Python is Superpower at:
+However, Python can help with the following:
 1)Compare thousands of transactions between actual processed transactions and accounting books. Are the accounting subtotals balanced?
 2)New transactions that have been posted or changed. Has a new transaction been posted? Has an old transaction not been recorded?
 3)Finding a transpositional error. Was a transaction recorded as $3832.12 but was actually $3823.12? This is difficult to see with the human eye
@@ -121,4 +119,5 @@ when there are thousands of transactions.
 Sources:
 Monk, Ellen F.; Wagner, Brej J. (2009). Concepts in enterprise resource planning (3rd ed.). Boston: Thomson Course Technology. pp. 23–34. ISBN 978-1-4239-0179-2.
 '''
+
 
