@@ -1,7 +1,8 @@
 '''
 A third of an accountant's day is spent reconciling incorrect, missing or newly posted transactions.
-This Python accounting automation program will compare thousands of real data transactions and database accounting records, detect new transactions
-and can increase the efficiency of an accounting team by uo to 30%.
+This Python pandas dataFrame data science automation program that compares thousands of data transactions to database records which detects unbalanced accounts, new transactions,and human error. 
+This will decrease accounting costs by over 7% yearly according to a Python senior data science architect at a fortune100.
+This Python accounting automation program will compare thousands of real data transactions and database accounting records, detect new transactions and can increase the efficiency of an accounting team by uo to 30%.
 
 Mid and small businesses benefit from Python automation scripts at little to no cost. 
 In fact, it has been prove that:"Midsized companies (fewer than 1,000 employees) are more likely to spend around $10 million to $20 million at most, 
