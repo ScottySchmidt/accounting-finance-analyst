@@ -40,7 +40,7 @@ dataList=dataDF.to_dict(orient='list')
 dataTotals=dataDF.groupby('GL Account')['Ending Amount'].sum().reset_index()
 dataTotals['GL Account'] = dataTotals['GL Account'].str.replace('-', '') #gets rid of hyphens 
     
-#MANIPULATE DATA:    
+#MANIPULATE DATA:  ( I also could of used a df.merge to join the two DFs)
 for d in dataTotals['GL Account']: #checks each data account 
     for a in accessTotals['ACCOUNT ID']: # checks each account in Access...
         if d==a: #if Data and Access Account are the same then do the following:
