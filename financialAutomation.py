@@ -2,7 +2,6 @@
 Python code to create a real life simulation Python automation trading bot
 '''
 
-
 acc_num='1234567' #account number would go here.
 for position in ib.positions(acc_num): 
     if  abs(position.position) > 200:
